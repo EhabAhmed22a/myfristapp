@@ -57,4 +57,5 @@ jobs:
        uses: azure/webapps-deploy@v3
        with:
             app-name: 'el7rafyy'
-            package: .
+            package: ./deployment-files
+            clean: true  # This removes all existing files first
