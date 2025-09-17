@@ -45,7 +45,9 @@ jobs:
           Compress-Archive -Path "./deployment-files/*" -DestinationPath "./deployment-package.zip"
           echo "ZIP package created:"
           dir ./deployment-package.zip
-      
+
+     - name: List contents of ZIP package
+       run: tar -tf ./deployment-package.zip
      
      - name: Deploy to Azure Web App
        id: deploy-to-webapp
