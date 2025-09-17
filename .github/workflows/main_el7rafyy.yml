@@ -41,11 +41,10 @@ jobs:
 
      - name: List files (debug)
        run: |
-        echo "Current directory contents:"
-        dir
-        echo "Looking for .NET files:"
-        dir *.dll
-        dir *.exe
+        echo "Creating ZIP package..."
+          Compress-Archive -Path "./deployment-files/*" -DestinationPath "./deployment-package.zip"
+          echo "ZIP package created:"
+          dir ./deployment-package.zip
       
      - name: Login to Azure
        uses: azure/login@v2
@@ -58,5 +57,5 @@ jobs:
        uses: azure/webapps-deploy@v3
        with:
             app-name: 'el7rafyy'
-            package: ./deployment-files
+            package: .
             clean: true  # This removes all existing files first
