@@ -33,22 +33,29 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: .net-app
-          path: ./published-app
+     - name: Download artifact from build job
+       uses: actions/download-artifact@v4
+       with:
+            name: .net-app
+
+     - name: List files (debug)
+       run: |
+        echo "Current directory contents:"
+        dir
+        echo "Looking for .NET files:"
+        dir *.dll
+        dir *.exe
       
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_3F1B213DF49F49FCADD9BCC03B484C58 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A6F8823EC0884A5FAD2E13449DC5C7F4 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C0D60ADE8B6543D281A935B376C84D8A }}
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'el7rafyy'
-          slot-name: 'Production'
-          package: ./published-app
+     - name: Login to Azure
+       uses: azure/login@v2
+       with:
+            client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_3F1B213DF49F49FCADD9BCC03B484C58 }}
+            tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_A6F8823EC0884A5FAD2E13449DC5C7F4 }}
+            subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C0D60ADE8B6543D281A935B376C84D8A }}
+     - name: Deploy to Azure Web App
+       id: deploy-to-webapp
+       uses: azure/webapps-deploy@v3
+       with:
+            app-name: 'el7rafyy'
+            slot-name: 'Production'
+            package: ./published-app
